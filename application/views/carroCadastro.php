@@ -23,8 +23,14 @@ and open the template in the editor.
             <br><br>
             <input type="text" required placeholder="Placa aqui..." name="placa"/>
             <br><br>
-            <input type="text" required placeholder="idPessoa aqui..." name="idPessoa"/>
-            <br><br> 
+            <select name="idPessoa">
+                <option value="1">Proprietário</option>
+                <?php foreach ($pessoas as $pes): ?>
+                <option value="<?php echo $pes->idPessoa; ?>">
+                    <?php echo $pes->nome; ?>                        
+                </option>
+                <?php endforeach; ?>
+            </select>
             <input type="submit" value="Salvar" name="salvar">
             <input type="reset" value="Limpar" name="limpar">
             
@@ -44,7 +50,15 @@ and open the template in the editor.
                     <td><?php echo $carro->portas; ?></td>
                     <td><input type="color" disabled value="<?php echo $carro->cor; ?>"/></td>
                     <td><?php echo $carro->placa; ?></td>
-                    <td><?php echo $carro->idPessoa; ?></td>
+                    <td>
+                        <?php foreach ($pessoas as $pes): 
+                            if($pes->idPessoa == $carro->idPessoa){
+                                echo $pes->nome;
+                                break;//sair desta estrutura quando achar o valor correspondente
+                            }
+                        endforeach;
+                        ?>
+                    </td>
                     <td>
                        <a href="<?php echo base_url() .
                                 'carro/editar/' . 

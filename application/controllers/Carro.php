@@ -20,15 +20,15 @@ class Carro extends CI_Controller {
         parent::__construct();
        if (!$this->session->userdata('estou_logado')) {
             redirect('Login');
-        } elseif ($this->session->userdata('logado')->perfilAcesso == 'user') {
-            redirect('home');
         }
         $this->load->model('Carro_model', 'carro');
+        $this->load->model('Pessoa_model', 'pessoa');
         //'carro' é um alias/apelido para 'Carro_model'
     }
 
     public function index() {
         $dados['carros'] = $this->carro->listar();
+        $dados['pessoas'] = $this->pessoa->listar();
         $this->load->view('carroCadastro', $dados);
     }
 
@@ -62,6 +62,7 @@ class Carro extends CI_Controller {
     
     public function editar($id) {
         $dados['carro'] = $this->carro->editar($id);
+        $dados['pessoas'] = $this->pessoa->listar();
         $this->load->view('carroEditar', $dados);
     }
     
